@@ -7,9 +7,12 @@ let gulp = require('gulp'),
 	sass = require('gulp-sass'),
 	sourcemaps = require('gulp-sourcemaps'),
 	del = require('del');
+	browserSync = require('browser-sync').create();
+	reload = browserSync.reload;
+	neat = require('node-neat');
 
-gulp.task('concatScripts', ()=> {
-return gulp.src('js/**/*.js')
+gulp.task('concatScripts',['clean'], ()=> {
+return gulp.src('js/app/main.js')
 	.pipe(sourcemaps.init())
 	.pipe(concat('app.js'))
 	.pipe(sourcemaps.write('./'))
@@ -26,15 +29,21 @@ return gulp.src('js/app.js')
 gulp.task('sass', ()=>{
 return gulp.src('scss/app.scss')
 	.pipe(sourcemaps.init())
-	.pipe(sass())
+	.pipe(sass({
+		includePaths: require('node-neat').includePaths
+	}))
 	.pipe(sourcemaps.write('./'))
 	.pipe(gulp.dest('css'))
+	.pipe(reload({stream: true}));
 });
 
 
 gulp.task('watchFiles', ()=>{
+	 browserSync.init({
+        server: "./"
+    });
 	gulp.watch('scss/**/*.scss', ['sass']);
-	gulp.watch('js/main.js', ['concatScripts']);
+	gulp.watch('js/**/*.js', ['concatScripts']);
 });
 
 gulp.task('clean', ()=>{
