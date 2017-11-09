@@ -44,6 +44,7 @@ gulp.task('watchFiles', ()=>{
     });
 	gulp.watch('scss/**/*.scss', ['sass']);
 	gulp.watch('js/**/*.js', ['concatScripts']);
+	gulp.watch('**.html').on('change', reload);
 });
 
 gulp.task('clean', ()=>{

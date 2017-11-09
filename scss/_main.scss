@@ -14,12 +14,15 @@ body {
 	height: 90vh;
 	margin:5vh auto;
 	align-items: center;
+	flex-direction:column;
 
 	@include bp(medium){
 		width:1170px;
 	}
 }
+.boiler-h1{
+	margin-top:auto;
+}
 .boiler-img{
 	margin:auto;
 }
-
